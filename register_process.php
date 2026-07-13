@@ -1,4 +1,5 @@
 <?php
+require_once 'config.php';
 session_start();
 
 if (
@@ -34,17 +35,21 @@ if ($registerPassword !== $registerConPassword) {
   exit();
 }
 
-if (isset($_SESSION['registeredUser']) && $registerName === $_SESSION['registeredUser']['username']) {
-  $_SESSION['error'] = $registerName . 'already exist';
+$stmt = $pdo->prepare('SELECT * FROM users
+WHERE username = ?');
+
+$stmt->execute([$registerName]);
+
+if ($stmt->fetch()) {
+  $_SESSION['error'] = $registerName . ' already exists';
   header('Location: register.php');
   exit();
+} else {
+  $stmt = $pdo->prepare('INSERT INTO users (username, password) VALUES (?, ?)');
+
+  $stmt->execute([$registerName, $registerPassword]);
+
+  $_SESSION['success'] = 'Registration successful. Please log in.';
+  header('Location: login.php');
+  exit();
 }
-
-$_SESSION['registeredUser'] = [
-  'username' => $registerName,
-  'password' => $registerPassword
-];
-
-$_SESSION['success'] = 'Registration successful. Please log in.';
-header('Location: login.php');
-exit();
