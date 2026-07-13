@@ -11,25 +11,25 @@ if (
   exit();
 }
 
-$registerName = htmlspecialchars(trim($_POST['username']));
-$registerPassword = trim($_POST['password']);
-$registerConPassword = trim($_POST['conPassword']);
-if (strlen($registerName) < 3 || empty($registerName)) {
+$username = htmlspecialchars(trim($_POST['username']));
+$password = trim($_POST['password']);
+$cPassword = trim($_POST['conPassword']);
+if (strlen($username) < 3) {
   $_SESSION['error'] = 'Username must have 3 or more characters and cannot be empty';
   header('Location: register.php');
   exit();
 }
-if (strlen($registerPassword) < 6 || empty($registerPassword)) {
+if (strlen($password) < 6) {
   $_SESSION['error'] = 'Password must have 6 or more characters and cannot be empty';
   header('Location: register.php');
   exit();
 }
-if (empty($registerConPassword)) {
+if (empty($cPassword)) {
   $_SESSION['error'] = 'Confirm Password is required';
   header('Location: register.php');
   exit();
 }
-if ($registerPassword !== $registerConPassword) {
+if ($password !== $cPassword) {
   $_SESSION['error'] = 'Confirm password does not match password';
   header('Location: register.php');
   exit();
@@ -38,16 +38,17 @@ if ($registerPassword !== $registerConPassword) {
 $stmt = $pdo->prepare('SELECT * FROM users
 WHERE username = ?');
 
-$stmt->execute([$registerName]);
+$stmt->execute([$username]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($stmt->fetch()) {
-  $_SESSION['error'] = $registerName . ' already exists';
+if ($user) {
+  $_SESSION['error'] = $username . ' already exists';
   header('Location: register.php');
   exit();
 } else {
   $stmt = $pdo->prepare('INSERT INTO users (username, password) VALUES (?, ?)');
 
-  $stmt->execute([$registerName, $registerPassword]);
+  $stmt->execute([$username, $password]);
 
   $_SESSION['success'] = 'Registration successful. Please log in.';
   header('Location: login.php');
