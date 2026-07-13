@@ -1,4 +1,5 @@
 <?php
+require_once 'config.php';
 session_start();
 
 if (
@@ -23,19 +24,18 @@ if (empty($password)) {
   exit();
 }
 
-if (isset($_SESSION['registeredUser'])) {
-  if ($username === $_SESSION['registeredUser']['username'] && $password === $_SESSION['registeredUser']['password']) {
-    $_SESSION['username'] = $username;
-    header('Location: dashboard.php');
-    exit();
-  } else {
-    $_SESSION['error'] = 'Invalid username or password';
-    header('Location: login.php');
-    exit();
-  }
-} else {
-  $_SESSION['error'] = 'Invalid username or password';
-  header('Location: login.php');
+$stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
+$stmt->execute([$username]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($user && $password === $user['password']) {
+  $_SESSION['username'] = $user['username'];
+  header('Location: dashboard.php');
   exit();
 }
+
+$_SESSION['error'] = 'Invalid username or password';
+header('Location: login.php');
+exit();
+
 ?>
