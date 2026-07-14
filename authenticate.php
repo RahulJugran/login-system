@@ -28,7 +28,7 @@ $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
 $stmt->execute([$username]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($user && $password === $user['password']) {
+if ($user && password_verify($password, $user['password'])) {
   $_SESSION['username'] = $user['username'];
   header('Location: dashboard.php');
   exit();

@@ -46,9 +46,11 @@ if ($user) {
   header('Location: register.php');
   exit();
 } else {
+  $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+  
   $stmt = $pdo->prepare('INSERT INTO users (username, password) VALUES (?, ?)');
 
-  $stmt->execute([$username, $password]);
+  $stmt->execute([$username, $passwordHash]);
 
   $_SESSION['success'] = 'Registration successful. Please log in.';
   header('Location: login.php');
