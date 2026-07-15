@@ -13,13 +13,11 @@ $username = htmlspecialchars(trim($_POST['username']));
 $password = trim($_POST['password']);
 
 if (empty($username)) {
-  $_SESSION['error'] = 'Username is required';
-  redirect('login.php');
+  errorRedirect('Username is required', 'login.php');
 }
 
 if (empty($password)) {
-  $_SESSION['error'] = 'Password is required';
-  redirect('login.php');
+  errorRedirect('Password is required', 'login.php');
 }
 
 $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
@@ -31,7 +29,5 @@ if ($user && password_verify($password, $user['password'])) {
   redirect('dashboard.php');
 }
 
-$_SESSION['error'] = 'Invalid username or password';
-redirect('login.php');
-
+errorRedirect('Invalid username or password', 'login.php');
 ?>
