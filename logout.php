@@ -1,12 +1,11 @@
 <?php
+require_once 'functions.php';
 session_start();
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  header('Location: dashboard.php');
-  exit();
+  redirect('dashboard.php');
 }
 
 $_SESSION = [];
 session_destroy();
 
-header('Location: login.php');
-exit();
+redirect('login.php');

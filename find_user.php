@@ -1,9 +1,9 @@
 <?php
 require_once 'config.php';
+require_once 'functions.php';
 
 if (!isset($_POST['username'])) {
-  header('Location: form.php');
-  exit();
+  redirect('form.php');
 }
 $username = trim($_POST['username']);
 

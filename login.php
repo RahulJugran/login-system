@@ -1,9 +1,9 @@
 <?php
 session_start();
+require_once 'functions.php';
 
 if (isset($_SESSION['username'])) {
-  header('Location: dashboard.php');
-  exit();
+ redirect('dashboard.php');
 }
 ?>
 <!DOCTYPE html>

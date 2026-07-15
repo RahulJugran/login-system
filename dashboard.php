@@ -7,10 +7,10 @@
 </head>
 <body>
   <?php
+  require_once 'functions.php';
   session_start();
   if (!isset($_SESSION['username'])) {
-    header('Location: login.php');
-    exit();
+    redirect('login.php');
   } else {
     echo 'Welcome ' . $_SESSION['username'];
     echo "<form action='logout.php' method='post'>
