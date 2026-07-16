@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'functions.php';
+require_once 'includes/functions.php';
 
 if (isset($_SESSION['username'])) {
  redirect('dashboard.php');
@@ -14,12 +14,7 @@ if (isset($_SESSION['username'])) {
   <title>LOGIN</title>
 </head>
 <body>
-  <?php
-  if (isset($_SESSION['registeredUser'])) {
-    echo '<h2>' . 'Registered User:' . $_SESSION['registeredUser']['username'] . '</h2>';
-  }
-  ?>
-  <form action="authenticate.php" method="post">
+  <form action="auth/authenticate.php" method="post">
     <label for="username">User Name:</label>
     <input type="text" id="username" name="username" placeholder="Enter username">
     <br>

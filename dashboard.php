@@ -7,13 +7,13 @@
 </head>
 <body>
   <?php
-  require_once 'functions.php';
+  require_once 'includes/functions.php';
   session_start();
   if (!isset($_SESSION['username'])) {
     redirect('login.php');
   } else {
     echo 'Welcome ' . $_SESSION['username'];
-    echo "<form action='logout.php' method='post'>
+    echo "<form action='auth/logout.php' method='post'>
     <button>Logout</button>
     </form>";
   }

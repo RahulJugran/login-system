@@ -1,23 +1,23 @@
 <?php
-require_once 'config.php';
-require_once 'functions.php';
+require_once '../config/config.php';
+require_once '../includes/functions.php';
 session_start();
 
 if (
   !isset($_POST['username']) || !isset($_POST['password'])
 ) {
-  redirect('login.php');
+  redirect('../login.php');
 }
 
 $username = htmlspecialchars(trim($_POST['username']));
 $password = trim($_POST['password']);
 
 if (empty($username)) {
-  errorRedirect('Username is required', 'login.php');
+  errorRedirect('Username is required', '../login.php');
 }
 
 if (empty($password)) {
-  errorRedirect('Password is required', 'login.php');
+  errorRedirect('Password is required', '../login.php');
 }
 
 $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
@@ -26,8 +26,8 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($user && password_verify($password, $user['password'])) {
   $_SESSION['username'] = $user['username'];
-  redirect('dashboard.php');
+  redirect('../dashboard.php');
 }
 
-errorRedirect('Invalid username or password', 'login.php');
+errorRedirect('Invalid username or password', '../login.php');
 ?>

@@ -1,5 +1,5 @@
 <?php
-require_once 'functions.php';
+require_once 'includes/functions.php';
 session_start();
 if (isset($_SESSION['username'])) {
   redirect('dashboard.php');
@@ -13,7 +13,7 @@ if (isset($_SESSION['username'])) {
   <title>Registeration Form</title>
 </head>
 <body>
-  <form action="register_process.php" method="post">
+  <form action="auth/register_process.php" method="post">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username">
     <br>

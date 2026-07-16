@@ -1,11 +1,11 @@
 <?php
-require_once 'functions.php';
+require_once '../includes/functions.php';
 session_start();
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  redirect('dashboard.php');
+  redirect('../dashboard.php');
 }
 
 $_SESSION = [];
 session_destroy();
 
-redirect('login.php');
+redirect('../login.php');
