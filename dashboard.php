@@ -7,7 +7,7 @@
 </head>
 <body>
   <?php
-  require_once 'includes/functions.php';
+  require_once __DIR__ . '/includes/functions.php';
   session_start();
   if (!isset($_SESSION['username'])) {
     redirect('login.php');

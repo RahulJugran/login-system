@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'includes/functions.php';
+require_once __DIR__ . '/includes/functions.php';
 
 if (isset($_SESSION['username'])) {
  redirect('dashboard.php');
